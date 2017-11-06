@@ -10,8 +10,8 @@ function createTable() {
     for(var j = 0; j < 27; j++) {
       var td = tr.insertCell(j);
       td.style.border = '1px solid gray';
-      td.height = 20;
-      td.width = 100;
+      td.style.height = 20;
+      td.style.width = 100;
 
       if(j == 0 && i != 0) {
         td.innerHTML = "<b>" + i + "</b>";
@@ -21,13 +21,26 @@ function createTable() {
 
       if(i == 0 && j != 0) {
         td.innerHTML = "<b>" + letters[j - 1] + "</b>";
-        td.width = 100;
+        td.style.width = 100;
         continue;
       }
 
       td.setAttribute("contenteditable", "true");
+      td.addEventListener('keypress', onKey);
     }
   }
 
   document.body.appendChild(table);
+}
+
+function onKey(e) {
+  var key = e.which || e.keyCode;
+  if (key === 13) { // 13 is enter
+    e.preventDefault();
+    var td = e.path[0];
+    var result = eval(td.innerText);
+    if(result) {
+      td.innerText = result;
+    }
+  }
 }
