@@ -1,0 +1,48 @@
+body, html {
+	height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+div.welcome {
+	height: 100%;
+	text-align: center;
+}
+
+div.welcome img {
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+	width: 300px;
+}
+
+.board {
+    width:600px;
+    height:600px;
+    background-color:#ffffff;
+    position:fixed;
+    margin-left:-300px; /* half of width */
+    margin-top:-300px;  /* half of height */
+    top:50%;
+    left:50%;
+    table-layout: fixed;
+}
+
+table, tr, td {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+table td {
+    width: 25%;
+    height: 20px;
+    overflow: hidden;
+}

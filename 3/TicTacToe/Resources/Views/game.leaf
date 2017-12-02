@@ -1,0 +1,68 @@
+#extend("base")
+
+#export("title") { Tic Tac Toe - Player #(user) }
+
+#export("content") {
+
+<script type="text/javascript">
+    var ws = new WebSocket("ws://0.0.0.0:8080/ws")
+
+    ws.onmessage = function(msg) {
+        var data = msg.data.split(';')
+
+        if(data[0] == "move") {
+            add(data[1], data[2], data[3])
+            return
+        }
+
+        if(data[0] == "restart") {
+            location.reload()
+            return
+        }
+
+        if(data[0] == "winner") {
+            if(data[1] == 1) {
+                alert("Вы выиграли :)");
+            } else {
+                alert("Вы проиграли :(");
+            }
+            restart();
+        }
+
+    }
+
+    ws.onopen = function(event) {
+        ws.send("bind;" + #(user))
+    }
+
+    function add(symbol, row, col) {
+        var td = document.getElementById('gameBoard').rows[row].cells[col]
+        td.innerHTML = symbol
+    };
+
+    function onClick(event) {
+        var td = event.srcElement
+        var row = td.parentNode.rowIndex
+        var col = td.cellIndex
+        ws.send("move;" + #(user) + ";" + row + ";" + col)
+        event.stopPropagation()
+    };
+
+    function restart() {
+        ws.send("restart")
+    };
+</script>
+
+<table class="board" id="gameBoard">
+    #loop(board, "row") {
+    <tr>
+        #loop(row, "cell") {
+            <td align="center" onclick="onClick(event);">
+                #(cell.value)
+            </td>
+        }
+    </tr>
+    }
+</table>
+<button type="button" onclick="restart()">Перезапустить игру</button>
+}
