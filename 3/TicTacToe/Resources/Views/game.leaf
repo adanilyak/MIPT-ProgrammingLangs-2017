@@ -5,7 +5,7 @@
 #export("content") {
 
 <script type="text/javascript">
-    var ws = new WebSocket("ws://0.0.0.0:8080/ws")
+    var ws = new WebSocket("ws://174.138.75.172:8080/ws")
 
     ws.onmessage = function(msg) {
         var data = msg.data.split(';')
